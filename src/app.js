@@ -51,9 +51,10 @@ const swaggerOptions = {
       description: "API pour récupérer et ajouter des blagues",
       version: "1.0.0",
     },
-    host: "localhost:5007",
+    // host: "localhost:5007",
+    host:"https://carambar-gmqo.onrender.com",
     basePath: "/",
-    schemes: ["http"],
+    schemes: ["https"],
     components: {
       schemas: {
         Joke: {
