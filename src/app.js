@@ -52,7 +52,7 @@ const swaggerOptions = {
       version: "1.0.0",
     },
     // host: "localhost:5007",
-    host:"https://carambar-gmqo.onrender.com",
+    host:"carambar-gmqo.onrender.com",
     basePath: "/",
     schemes: ["https"],
     components: {
@@ -83,7 +83,7 @@ const swaggerOptions = {
 // Génération de la documentation Swagger à partir des options ci-dessus
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
-// On utilise Swagger pour servir la documentation accessible sous /api-docs. Quand on navigue vers 'localhost:5004/api-docs', Swagger affichera l'interface de la documentation de l'API
+// On utilise Swagger pour servir la documentation accessible sous /api-docs. Quand on navigue vers 'localhost:5007/api-docs', Swagger affichera l'interface de la documentation de l'API
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // On synchronise la base de données avec Sequelize pour s'assurer que les tables sont créées et synchronisées avec le modèle défini. Table : Lorsque tu utilises sequelize.sync() pour synchroniser la base de données, Sequelize va créer une table "Jokes" dans ta base de données qui va contenir les données réelles (les blagues) en suivant la structure du modèle.
