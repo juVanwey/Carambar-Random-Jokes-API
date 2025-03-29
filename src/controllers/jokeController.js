@@ -1,16 +1,12 @@
-import { Joke } from '../models/joke.js'; // On importe le modèle Joke qui nous permet d'interagir avec la base de données
-import { Sequelize } from "sequelize";
+import { Joke } from '../models/joke.js'; // pour interagir avec la base de données
+import { Sequelize } from "sequelize"; // pour utiliser des fonctionnalités supplémentaires dans la manipulation de la bdd comme litteral
 
 // Récupérer toutes les jokes
 export const getAllJokes = async (req, res) => {
   try {
-    // Recherche de toutes les blagues dans la base de données via le modèle Joke
-    const jokes = await Joke.findAll(); 
-    
-    // Si la récupération réussit, on renvoie les blagues au format JSON
-    res.json(jokes); 
+    const jokes = await Joke.findAll(); // .findAll() : méthode de Sequelize qui recherche toutes les blagues dans la table liée au modèle Joke
+    res.json(jokes); // renvoie un tableau de jokes
   } catch (error) {
-    // En cas d'erreur, on renvoie une réponse avec un statut 500 (erreur serveur) et un message d'erreur
     res.status(500).send('Error retrieving jokes');
   }
 };
@@ -18,52 +14,37 @@ export const getAllJokes = async (req, res) => {
 // Récupérer une joke aléatoire
 export const getRandomJoke = async (req, res) => {
   try {
-    // Recherche d'une blague aléatoire dans la base de données
-    const randomJoke = await Joke.findOne({
-      order: Sequelize.literal('random()'), // Utilisation de `random()` pour récupérer une blague aléatoire
+    const randomJoke = await Joke.findOne({ // méthode de Sequelize pour récupérer une blague
+      order: Sequelize.literal('random()'), // utilisation de `random()` pour récupérer une blague aléatoire (fonction SQL native)
     });
-    
-    // Renvoie de la blague aléatoire trouvée au format JSON
-    res.json(randomJoke);
+    res.json(randomJoke); // renvoie la blague
   } catch (error) {
-    // En cas d'erreur, on renvoie une erreur 500
     res.status(500).send('Error retrieving random joke');
-  }
-};
-
-// Ajouter une nouvelle joke
-export const addJoke = async (req, res) => {
-  // On récupère la question et la réponse de la blague envoyée dans le corps de la requête
-  const { question, answer } = req.body; 
-  try {
-    // On crée la nouvelle blague dans la base de données
-    const newJoke = await Joke.create({ question, answer });
-    
-    // On renvoie la blague nouvellement créée avec un statut HTTP 201 (créée avec succès)
-    res.status(201).json(newJoke); 
-  } catch (error) {
-    // En cas d'erreur, on renvoie une erreur 500
-    res.status(500).send('Error adding joke');
   }
 };
 
 // Récupérer une joke par son ID
 export const getJokeById = async (req, res) => {
-  // Récupère l'ID de la blague à partir des paramètres de l'URL
-  const { id } = req.params; 
+  const { id } = req.params; // récupère l'ID de la blague à partir des paramètres de l'URL (destructuration d'objet)
   try {
-    // Recherche de la blague dans la base de données par son ID
-    const joke = await Joke.findByPk(id); 
-    
+    const joke = await Joke.findByPk(id); // méthode de Sequelize pour récupérer une blague en utilisant son ID, qui est la clé primaire (Pk) de la table
     if (joke) {
-      // Si la blague existe, on la renvoie au format JSON
-      res.json(joke);
+      res.json(joke); // renvoie la blague
     } else {
-      // Si la blague n'existe pas, on renvoie une erreur 404 (blague non trouvée)
       res.status(404).send('Joke not found');
     }
   } catch (error) {
-    // En cas d'erreur, on renvoie une erreur 500
     res.status(500).send('Error retrieving joke');
+  }
+};
+
+// Ajouter une nouvelle joke
+export const addJoke = async (req, res) => {
+  const { question, answer } = req.body; // destructuration d'objet pour extraire les données question et answer envoyées par le client dans le corps de la requête (c'est-à-dire dans req.body).
+  try {
+    const newJoke = await Joke.create({ question, answer }); // crée la nouvelle blague dans la bdd
+    res.status(201).json(newJoke); // renvoie la blague créée avec un statut HTTP 201 (créée avec succès)
+  } catch (error) {
+    res.status(500).send('Error adding joke');
   }
 };

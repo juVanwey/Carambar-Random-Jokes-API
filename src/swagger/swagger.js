@@ -29,6 +29,8 @@
  *      description: API pour récupérer et ajouter des blagues
  */
 
+// Ce bloc définit un tag appelé Jokes. Les tags sont utilisés pour organiser les routes dans la documentation Swagger. Ici, il indique que toutes les routes liées aux blagues seront regroupées sous le tag Jokes, avec la description "API pour récupérer et ajouter des blagues".
+
 /**
  * @swagger
  * /jokes:
