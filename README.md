@@ -61,7 +61,6 @@ Lien vers la documentation Swagger : [https://carambar-gmqo.onrender.com/api-doc
 ### Backend
 
 Le code de l'API (Node.js, Express, Sequelize, SQLite) est organisé comme suit :
-
 - `app.js` : Point d'entrée de l'API.
 - `models/` : Contient les modèles Sequelize pour interagir avec la base de données.
 - `controllers/` : Contient la logique de gestion des requêtes.
@@ -71,7 +70,6 @@ Le code de l'API (Node.js, Express, Sequelize, SQLite) est organisé comme suit 
 ### Frontend
 
 Le code de l'interface utilisateur (HTML, CSS, JavaScript) est organisé comme suit :
-
 - `index.html` : Page principale de l'interface utilisateur.
 - `style.css` : Styles CSS pour l'interface utilisateur.
 - `script.js` : Logique JavaScript pour l'interaction avec l'API et le frontend.
