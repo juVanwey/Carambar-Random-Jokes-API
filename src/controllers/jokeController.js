@@ -48,3 +48,19 @@ export const addJoke = async (req, res) => {
     res.status(500).send('Error adding joke');
   }
 };
+
+// Supprimer une joke
+export const deleteJoke = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const joke = await Joke.findByPk(id); // cherche la blague par son ID
+    if (joke) {
+      await joke.destroy(); // supprime la blague de la base de données
+      res.status(204).send(); // réponse vide avec le code HTTP 204 (suppression réussie)
+    } else {
+      res.status(404).send('Joke not found');
+    }
+  } catch (error) {
+    res.status(500).send('Error deleting joke');
+  }
+};

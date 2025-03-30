@@ -1,5 +1,5 @@
 import express from 'express'; // permet de créer des routes et gérer des requêtes
-import { getAllJokes, getRandomJoke, addJoke, getJokeById } from '../controllers/jokeController.js';
+import { getAllJokes, getRandomJoke, addJoke, getJokeById, deleteJoke } from '../controllers/jokeController.js';
 
 const router = express.Router(); // express.Router() crée un objet qui va contenir toutes les routes de l'application.
 
@@ -11,6 +11,8 @@ router.get('/random', getRandomJoke); // pour récupérer une joke aléatoire
 
 router.post('/', addJoke); // pour ajouter une nouvelle joke
 
-router.get('/:id', getJokeById); // // pour récupérer une joke par son ID
+router.get('/:id', getJokeById); // pour récupérer une joke par son ID
+
+router.delete('/:id', deleteJoke); // pour supprimer une joke par son ID
 
 export default router;
