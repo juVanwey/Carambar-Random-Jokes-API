@@ -38,21 +38,41 @@ const initialJokes = [
 
 async function seedDatabase() {
   try {
-    console.log("Initializing database...");
-    await sequelize.sync({ force: true }); // crée la table des blagues dans la bdd
-    console.log("Database table created!");
-
-    console.log("Adding sample jokes...");
-    const jokes = await Joke.bulkCreate(initialJokes); // bulkCreate() est une méthode de Sequelize qui permet d'ajouter plusieurs enregistrements à la fois dans la base de données
-    console.log(`Successfully added ${jokes.length} jokes to the database!`);
-    console.log("Database seeding completed successfully!");
-
-    await sequelize.close(); // ferme proprement la connexion à la base de données une fois que tout est terminé
+    await sequelize.authenticate();
+    const jokeCount = await Joke.count();
+   
+    if (jokeCount > 0) {
+      console.log(`Database already contains ${jokeCount} jokes. Skipping seeding.`);
+    } else {
+      await sequelize.sync(); // crée la table des blagues dans la bdd
+      console.log("Adding sample jokes...");
+      await Joke.bulkCreate(initialJokes); // bulkCreate() est une méthode de Sequelize qui permet d'ajouter plusieurs enregistrements à la fois dans la base de données
+      console.log(`Successfully added ${initialJokes.length} jokes!`);
+    }
+   
+    await sequelize.close();
   } catch (error) {
-    console.error("Error seeding database:", error);
-    process.exit(1); // Arrête le processus avec un code de sortie 1, indiquant qu'il y a eu une erreur
+    await sequelize.sync({ force: true });
   }
 }
+
+// async function seedDatabase() {
+//   try {
+//     console.log("Initializing database...");
+//     await sequelize.sync({ force: true }); // crée la table des blagues dans la bdd
+//     console.log("Database table created!");
+
+//     console.log("Adding sample jokes...");
+//     const jokes = await Joke.bulkCreate(initialJokes); // bulkCreate() est une méthode de Sequelize qui permet d'ajouter plusieurs enregistrements à la fois dans la base de données
+//     console.log(`Successfully added ${jokes.length} jokes to the database!`);
+//     console.log("Database seeding completed successfully!");
+
+//     await sequelize.close(); // ferme proprement la connexion à la base de données une fois que tout est terminé
+//   } catch (error) {
+//     console.error("Error seeding database:", error);
+//     process.exit(1); // Arrête le processus avec un code de sortie 1, indiquant qu'il y a eu une erreur
+//   }
+// }
 
 seedDatabase();
 
