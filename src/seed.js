@@ -38,21 +38,32 @@ const initialJokes = [
 
 async function seedDatabase() {
   try {
+    console.log("Checking existing database...");
+    
     await sequelize.authenticate();
     const jokeCount = await Joke.count();
-   
+    
     if (jokeCount > 0) {
       console.log(`Database already contains ${jokeCount} jokes. Skipping seeding.`);
     } else {
-      await sequelize.sync(); // crée la table des blagues dans la bdd
+      await sequelize.sync();
       console.log("Adding sample jokes...");
-      await Joke.bulkCreate(initialJokes); // bulkCreate() est une méthode de Sequelize qui permet d'ajouter plusieurs enregistrements à la fois dans la base de données
+      await Joke.bulkCreate(initialJokes);
       console.log(`Successfully added ${initialJokes.length} jokes!`);
     }
-   
-    await sequelize.close();
+    
   } catch (error) {
+    console.log("Error or no database found, creating new one:", error.message);
+    
     await sequelize.sync({ force: true });
+    console.log("Database tables created!");
+    
+    console.log("Adding sample jokes to new database...");
+    const jokes = await Joke.bulkCreate(initialJokes);
+    console.log(`Successfully added ${jokes.length} jokes to the database!`);
+  } finally {
+    await sequelize.close();
+    console.log("Database connection closed.");
   }
 }
 
