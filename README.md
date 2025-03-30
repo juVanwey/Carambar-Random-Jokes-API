@@ -10,26 +10,26 @@ Cette API propose les 4 endpoints suivants :
 ### Consulter toutes les blagues
 
 - **Méthode** : GET
-- **Endpoint** : `/api/jokes`
+- **Endpoint** : `/jokes`
 - **Description** : Récupère la liste de toutes les blagues stockées dans la base de données.
 
 ### Consulter une blague aléatoire
 
 - **Méthode** : GET
-- **Endpoint** : `/api/jokes/random`
+- **Endpoint** : `/jokes/random`
 - **Description** : Récupère une blague au hasard.
 
 ### Consulter une blague spécifique
 
 - **Méthode** : GET
-- **Endpoint** : `/api/jokes/:id`
+- **Endpoint** : `/jokes/:id`
 - **Description** : Récupère une blague spécifique en fonction de son ID.  
-  Exemple : `/api/jokes/1`
+  Exemple : `/jokes/1`
 
 ### Ajouter une blague
 
 - **Méthode** : POST
-- **Endpoint** : `/api/jokes`
+- **Endpoint** : `/jokes`
 - **Description** : Permet d'ajouter une nouvelle blague à la base de données.  
   Exemple de corps de la requête :
   ```json
@@ -53,7 +53,7 @@ Lien vers la documentation Swagger : [https://carambar-gmqo.onrender.com/api-doc
 
 ## 🚀 Déploiement
 
-- **Backend déployé sur Render.com** : [Lien à insérer]
+- **Backend déployé sur Render.com** : [https://carambar-gmqo.onrender.com](https://carambar-gmqo.onrender.com)]
 - **Frontend**, qui interagit avec cette API, déployé sur **GitHub Pages** : [https://juvanwey.github.io/Carambar-Front/](https://juvanwey.github.io/Carambar-Front/)
 
 ## 📂 Structure du projet
@@ -81,8 +81,9 @@ Le code de l'interface utilisateur (HTML, CSS, JavaScript) est organisé comme s
 1. Clone le repository du backend : [https://github.com/juVanwey/Carambar](https://github.com/juVanwey/Carambar)
 2. Installe les dépendances avec npm :
    ```bash
-   npm install
-   npm start
+   npm i
+   npm run seed
+   npm run start
    ```
 
 ### Frontend
