@@ -41,7 +41,27 @@ export const getJokeById = async (req, res) => {
 // Ajouter une nouvelle joke
 export const addJoke = async (req, res) => {
   const { question, answer } = req.body; // destructuration d'objet pour extraire les données question et answer envoyées par le client dans le corps de la requête (c'est-à-dire dans req.body).
+
+  if (!question || !answer) {
+    return res.status(400).json({ error: "La question et la réponse sont obligatoires." });
+  }
+
+  if (question.length < 5) {
+    return res.status(400).json({ error: "La question doit contenir au moins 5 caractères." });
+  }
+
+  if (answer.length < 5) {
+    return res.status(400).json({ error: "La réponse doit contenir au moins 5 caractères." });
+  }
+
   try {
+
+    const existingJoke = await Joke.findOne({ where: { question, answer } });
+
+    if (existingJoke) {
+      return res.status(400).json({ error: "Cette blague existe déjà." });
+    }
+
     const newJoke = await Joke.create({ question, answer }); // crée la nouvelle blague dans la bdd
     res.status(201).json(newJoke); // renvoie la blague créée avec un statut HTTP 201 (créée avec succès)
   } catch (error) {
