@@ -78,14 +78,29 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Joke'
+ *             type: object
+ *             required:
+ *               - question
+ *               - answer
+ *             properties:
+ *               question:
+ *                 type: string
+ *                 description: La question de la blague
+ *               answer:
+ *                 type: string
+ *                 description: La réponse à la blague
  *     responses:
  *       201:
  *         description: La blague a été ajoutée avec succès
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Joke'
+ *               type: object
+ *               properties:
+ *                 question:
+ *                   type: string
+ *                 answer:
+ *                   type: string
  *       400:
  *         description: Mauvais format ou données manquantes
  *       500:
